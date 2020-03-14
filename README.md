@@ -4,5 +4,5 @@ Game Client for DND-type games
 
 Made by:
 - Kulikov Ilya
-- Fomynikh Artur
+- Fominykh Artur
 - Perebeinos Yuri
