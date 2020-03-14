@@ -13,6 +13,11 @@ public class DiceComponent : MonoBehaviour
         Field.text = Result;
     }
 
+    public string GetResult()
+    {
+        return Result;
+    }
+
     public void DiceRoll(int n)
     {
         Result = "Бросаем кубик ";
