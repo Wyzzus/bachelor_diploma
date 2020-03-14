@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask layerMask;
     public Vector3 NewPosition = Vector3.zero;
-    public float MoveDamp = 10f;
+    public PlayerEntity playerEntity;
 
     void Update()
     {
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(NewPosition);
             }
         }
-        transform.position = Vector3.Lerp(transform.position, NewPosition, Time.deltaTime * MoveDamp);
+        playerEntity.MoveTo(NewPosition);
     }
 
 }
