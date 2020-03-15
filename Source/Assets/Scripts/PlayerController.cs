@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,10 +9,12 @@ public class PlayerController : MonoBehaviour
     public LayerMask layerMask;
     public Vector3 NewPosition = Vector3.zero;
     public PlayerEntity playerEntity;
-
+    public Text Result;
+    
     void Update()
     {
         Movement();
+        Result.text = playerEntity.GetDice();
     }
 
     public void Movement()
@@ -31,4 +34,8 @@ public class PlayerController : MonoBehaviour
         playerEntity.MoveTo(NewPosition);
     }
 
+    public void CallDice(int n)
+    {
+        playerEntity.CallDice(n);
+    }
 }

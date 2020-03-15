@@ -6,12 +6,6 @@ using UnityEngine.UI;
 public class DiceComponent : MonoBehaviour
 {
     public string Result;
-    public Text Field;
-
-    private void Update()
-    {
-        Field.text = Result;
-    }
 
     public string GetResult()
     {
