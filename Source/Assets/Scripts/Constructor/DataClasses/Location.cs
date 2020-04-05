@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Location : MonoBehaviour, IDisplayable
+public class Location : DndObject, IDisplayable
 {
     public string Image { get; set; }
     public List<PlaceableObject> PlacedObjects = new List<PlaceableObject>();

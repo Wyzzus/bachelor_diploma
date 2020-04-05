@@ -15,6 +15,18 @@ public class DndEditor : MonoBehaviour
     public Image CurrentImageSprite;
     public string CurrentImageBase64;
 
+    public float MaxW = 450;
+    public float MaxH = 450;
+
+    public ImageHandler imageHandler;
+
+    public virtual void Start()
+    {
+        imageHandler = new ImageHandler();
+        imageHandler.MaxH = MaxH;
+        imageHandler.MaxW = MaxW;
+    }
+
     public void ShowBaseInfo(DndObject objectToEdit)
     {
         NameField.text = objectToEdit.Name;
@@ -34,8 +46,11 @@ public class DndEditor : MonoBehaviour
 
     public void LoadImage()
     {
-        string ext = "png";
-        var paths = StandaloneFileBrowser.OpenFilePanel("Выберите изображение", Application.dataPath, ext, false);
+        var extensions = new[] 
+        {
+            new ExtensionFilter("Image Files", "png", "jpg", "jpeg" ),
+        };
+        var paths = StandaloneFileBrowser.OpenFilePanel("Выберите изображение", Application.dataPath, extensions, false);
         if (paths.Length > 0)
         {
             StartCoroutine(ProcessingImage(paths[0]));
@@ -46,50 +61,10 @@ public class DndEditor : MonoBehaviour
     {
         byte[] imageBytes = File.ReadAllBytes(path);
         CurrentImageBase64 = System.Convert.ToBase64String(imageBytes);
-        ShowImage(CurrentImageBase64);
+        imageHandler.ShowImage(CurrentImageBase64, CurrentImageSprite);
         yield return null;
     }
 
-    public void ShowImage(string base64)
-    {
-        byte[] imageBytes = System.Convert.FromBase64String(base64);
-        Texture2D texture = new Texture2D(1, 1);
-        texture.LoadImage(imageBytes);
-        CurrentImageSprite.sprite = null;
-        CurrentImageSprite.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f));
-        CurrentImageSprite.rectTransform.sizeDelta = CalculateSpriteSize(texture);
-    }
-
-    public Vector2 CalculateSpriteSize(Texture2D texture)
-    {
-        float MaxW = 450;
-        float MaxH = 450;
-        float newWidth = MaxW;
-        float newHeight = MaxH;
-
-        float ratio = (float)texture.width / (float)texture.height;
-
-        if (ratio > 1)
-        {
-            newHeight = newWidth / ratio;
-            if (newHeight > MaxH)
-            {
-                newHeight = MaxH;
-                newWidth = newHeight * ratio;
-            }
-        }
-        else
-        {
-            newWidth = newHeight * ratio;
-            if (newWidth > MaxW)
-            {
-                newWidth = MaxW;
-                newHeight = newWidth / ratio;
-            }
-        }
-
-        return new Vector2(newWidth, newHeight);
-    }
 
     public virtual void ClearEditor()
     {
@@ -118,5 +93,51 @@ public class ScrollViewHandler
             GameObject clone = GameObject.Instantiate<GameObject>(prefab, content);
             clone.GetComponent<DataContainer>().Setup(obj, editor);
         }
+    }
+}
+
+[System.Serializable]
+public class ImageHandler
+{
+    public float MaxW = 450;
+    public float MaxH = 450;
+
+    public void ShowImage(string base64, Image ImageSprite)
+    {
+        byte[] imageBytes = System.Convert.FromBase64String(base64);
+        Texture2D texture = new Texture2D(1, 1);
+        texture.LoadImage(imageBytes);
+        ImageSprite.sprite = null;
+        ImageSprite.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f));
+        ImageSprite.rectTransform.sizeDelta = CalculateSpriteSize(texture);
+    }
+
+    public Vector2 CalculateSpriteSize(Texture2D texture)
+    {
+        float newWidth = MaxW;
+        float newHeight = MaxH;
+
+        float ratio = (float)texture.width / (float)texture.height;
+
+        if (ratio > 1)
+        {
+            newHeight = newWidth / ratio;
+            if (newHeight > MaxH)
+            {
+                newHeight = MaxH;
+                newWidth = newHeight * ratio;
+            }
+        }
+        else
+        {
+            newWidth = newHeight * ratio;
+            if (newWidth > MaxW)
+            {
+                newWidth = MaxW;
+                newHeight = newWidth / ratio;
+            }
+        }
+
+        return new Vector2(newWidth, newHeight);
     }
 }

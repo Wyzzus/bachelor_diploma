@@ -11,8 +11,9 @@ public class ObjectEditor : DndEditor
     public List<DndCategory> Categories;
     public Dropdown CategoryDropDown;
 
-    public void Start()
+    public override void Start()
     {
+        base.Start();
         Categories = PackConstructor.instance.CurrentThemePack.Categories;
         CreateCategory("Объекты");
     }
@@ -20,7 +21,7 @@ public class ObjectEditor : DndEditor
     public void Edit(PlaceableObject objectToEdit)
     {
         ShowBaseInfo(objectToEdit);
-        ShowImage(objectToEdit.Image);
+        imageHandler.ShowImage(objectToEdit.Image, CurrentImageSprite);
         CurrentEditObject = objectToEdit;
     }
 
