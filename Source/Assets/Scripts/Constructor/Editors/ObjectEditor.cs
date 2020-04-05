@@ -18,11 +18,15 @@ public class ObjectEditor : DndEditor
         CreateCategory("Объекты");
     }
 
-    public void Edit(PlaceableObject objectToEdit)
+    public override void Edit<T>(T objectToEdit)
     {
+        base.Edit(objectToEdit);
         ShowBaseInfo(objectToEdit);
-        imageHandler.ShowImage(objectToEdit.Image, CurrentImageSprite);
-        CurrentEditObject = objectToEdit;
+        PlaceableObject converted = objectToEdit as PlaceableObject;
+        imageHandler.ShowImage(converted.Image, CurrentImageSprite);
+        CurrentEditObject = converted;
+        CurrentImageBase64 = converted.Image;
+        CategoryDropDown.value = CurrentEditObject.CategoryId;
     }
 
     public void CreateCategory(string categoryName)
@@ -78,12 +82,12 @@ public class ObjectEditor : DndEditor
 
     public void Save()
     {
-        SaveBaseInfo(CurrentEditObject);
         SaveImage(CurrentEditObject);
         CurrentEditObject.CategoryId = CategoryDropDown.value;
         List<PlaceableObject> Objects = PackConstructor.instance.CurrentThemePack.Objects;
         if (!Objects.Contains(CurrentEditObject))
             Objects.Add(CurrentEditObject);
+        SaveBaseInfo(CurrentEditObject);
     }
 
     public override void ClearEditor()

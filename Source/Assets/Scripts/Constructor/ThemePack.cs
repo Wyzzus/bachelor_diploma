@@ -21,5 +21,5 @@ public class ThemePack
     public List<Attribute> Attributes = new List<Attribute>();
 
     [Header ("Events")]
-    public List<Event> Events = new List<Event>();
+    public List<DndEvent> Events = new List<DndEvent>();
 }

@@ -20,6 +20,11 @@ public class DndEditor : MonoBehaviour
 
     public ImageHandler imageHandler;
 
+    public virtual void Edit<T>(T obj) where T : DndObject
+    {
+
+    }
+
     public virtual void Start()
     {
         imageHandler = new ImageHandler();
@@ -37,11 +42,13 @@ public class DndEditor : MonoBehaviour
     {
         toSave.Name = NameField.text;
         toSave.Description = DescriptionField.text;
+        PackConstructor.instance.UpdateView();
     }
 
     public void SaveImage(IDisplayable displayable)
     {
         displayable.Image = CurrentImageBase64;
+        System.GC.KeepAlive(displayable.Image);
     }
 
     public void LoadImage()
@@ -65,7 +72,6 @@ public class DndEditor : MonoBehaviour
         yield return null;
     }
 
-
     public virtual void ClearEditor()
     {
         NameField.text = "";
@@ -73,6 +79,7 @@ public class DndEditor : MonoBehaviour
         CurrentImageBase64 = "";
         if(CurrentImageSprite)
             CurrentImageSprite.sprite = null;
+        CurrentImageSprite.rectTransform.sizeDelta = Vector2.zero;
     }
 }
 
@@ -82,7 +89,7 @@ public class ScrollViewHandler
     public GameObject prefab;
     public RectTransform content;
 
-    public void Update(List<DndObject> ObjectList, DndEditor editor = null)
+    public void Update<T>(List<T> ObjectList, DndEditor editor = null) where T : DndObject
     {
         foreach(RectTransform child in content)
         {
@@ -104,6 +111,8 @@ public class ImageHandler
 
     public void ShowImage(string base64, Image ImageSprite)
     {
+        if (base64 == null || base64.Length == 0)
+            return;
         byte[] imageBytes = System.Convert.FromBase64String(base64);
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(imageBytes);
