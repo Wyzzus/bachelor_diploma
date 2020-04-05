@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
     public LayerMask layerMask;
     public Vector3 NewPosition = Vector3.zero;
     public PlayerEntity playerEntity;
