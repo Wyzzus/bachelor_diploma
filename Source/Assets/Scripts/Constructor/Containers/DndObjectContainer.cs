@@ -1,26 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum DndObjectType
-{
-    Placeable,
-    Location,
-
-}
+using System.Reflection;
 
 public class DndObjectContainer : DataContainer
 {
-    public DndObjectType MyType;
     public void Edit()
     {
-        switch(MyType)
+        switch(Data.GetType().Name)
         {
-            case DndObjectType.Placeable:
+            case nameof(PlaceableObject):
                 StartEditor<ObjectEditor, PlaceableObject>();
                 break;
-            case DndObjectType.Location:
+            case nameof(Location):
                 StartEditor<LocationEditor, Location>();
+                break;
+            case nameof(Avatar):
+                StartEditor<AvatarEditor, Avatar>();
                 break;
         }
     }
@@ -35,13 +31,16 @@ public class DndObjectContainer : DataContainer
 
     public override void Remove()
     {
-        switch (MyType)
+        switch (Data.GetType().Name)
         {
-            case DndObjectType.Placeable:
+            case nameof(PlaceableObject):
                 PackConstructor.instance.CurrentThemePack.Objects.Remove((PlaceableObject)Data);
                 break;
-            case DndObjectType.Location:
+            case nameof(Location):
                 PackConstructor.instance.CurrentThemePack.Locations.Remove((Location)Data);
+                break;
+            case nameof(Avatar):
+                PackConstructor.instance.CurrentThemePack.Avatars.Remove((Avatar)Data);
                 break;
         }
         base.Remove();

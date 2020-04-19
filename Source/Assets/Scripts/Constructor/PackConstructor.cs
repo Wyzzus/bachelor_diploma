@@ -15,10 +15,12 @@ public class PackConstructor : MonoBehaviour
     [Header("Scroll View Handlers")]
     public ScrollViewHandler PlaceableHandler;
     public ScrollViewHandler LocationsHandler;
+    public ScrollViewHandler AvatarsHandler;
 
     [Header("Editors")]
     public ObjectEditor PlaceableEditor;
     public LocationEditor LocationsEditor;
+    public AvatarEditor AvatarEditor;
 
     [Header ("Current Pack")]
     public ThemePack CurrentThemePack = new ThemePack();
@@ -27,6 +29,7 @@ public class PackConstructor : MonoBehaviour
     {
         PlaceableHandler.Update(CurrentThemePack.Objects, PlaceableEditor);
         LocationsHandler.Update(CurrentThemePack.Locations, LocationsEditor);
+        AvatarsHandler.Update(CurrentThemePack.Avatars, AvatarEditor);
     }
 
     public void Awake()
