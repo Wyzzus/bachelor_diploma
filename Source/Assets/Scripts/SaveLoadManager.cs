@@ -5,7 +5,7 @@ using SFB;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class SaveLoadManager : MonoBehaviour
+public class SaveLoadManager
 {
     public bool Save(ThemePack pack, out string Message)
     {

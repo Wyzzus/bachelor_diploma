@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class PlayerEntity : Entity
 {
-    public MotorComponent Motor;
-    public DiceComponent Dice;
+    public EffectsComponent Effects;
 
-    // Start is called before the first frame update
+
     public override void Start()
     {
         base.Start();
     }
+
+    public void SetupEffects(List<int> effectsIds)
+    {
+        Effects.SetupEffects(effectsIds);
+    }
+
+
 }
