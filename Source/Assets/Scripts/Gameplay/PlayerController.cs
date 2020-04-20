@@ -15,6 +15,7 @@ public class PlayerController : Controller
         Movement();
         Common.GetDiceResult();
     }
+    #region Common
 
     public void Movement()
     {
@@ -37,4 +38,6 @@ public class PlayerController : Controller
     {
         Common.CallDice(n);
     }
+
+    #endregion
 }

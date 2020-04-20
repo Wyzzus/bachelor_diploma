@@ -46,6 +46,7 @@ public class PackConstructor : MonoBehaviour
 
     public void Awake()
     {
+        saveLoadManager = new SaveLoadManager();
         instance = this;
         UpdateView();
     }
