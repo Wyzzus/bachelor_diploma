@@ -18,6 +18,18 @@ public class DndObjectContainer : DataContainer
             case nameof(Avatar):
                 StartEditor<AvatarEditor, Avatar>();
                 break;
+            case nameof(Attribute):
+                StartEditor<AttributeEditor, Attribute>();
+                break;
+            case nameof(Effect):
+                StartEditor<EffectEditor, Effect>();
+                break;
+            case nameof(Equipment):
+                StartEditor<EquipmentEditor, Equipment>();
+                break;
+            case nameof(DndEvent):
+                StartEditor<EventEditor, DndEvent>();
+                break;
         }
     }
 
@@ -41,6 +53,18 @@ public class DndObjectContainer : DataContainer
                 break;
             case nameof(Avatar):
                 PackConstructor.instance.CurrentThemePack.Avatars.Remove((Avatar)Data);
+                break;
+            case nameof(Attribute):
+                PackConstructor.instance.CurrentThemePack.Attributes.Remove((Attribute)Data);
+                break;
+            case nameof(Effect):
+                PackConstructor.instance.CurrentThemePack.Effects.Remove((Effect)Data);
+                break;
+            case nameof(Equipment):
+                PackConstructor.instance.CurrentThemePack.InventoryItems.Remove((Equipment)Data);
+                break;
+            case nameof(DndEvent):
+                PackConstructor.instance.CurrentThemePack.Events.Remove((DndEvent)Data);
                 break;
         }
         base.Remove();

@@ -11,6 +11,7 @@ public class LocationEditor : DndEditor
     public PlaceableObject CurrentPlaceableObject = null;
 
     public List<PlaceableObject> Objects;
+
     public List<PlaceableObject> LocationObjects = new List<PlaceableObject>();
 
     public Dropdown ObjectsDropdown;
@@ -24,12 +25,6 @@ public class LocationEditor : DndEditor
     public override void Start()
     {
         base.Start();
-        Objects = PackConstructor.instance.CurrentThemePack.Objects;
-    }
-
-    public void OnEnable()
-    {
-        UpdateView();
     }
 
     public void Update()
@@ -82,12 +77,15 @@ public class LocationEditor : DndEditor
     public void UpdateView()
     {
         HandleDropDown();
+        if(Objects.Count > 0)
+            SetCurrentPlaceable(0);
     }
 
     public void HandleDropDown()
     {
         ObjectsDropdown.ClearOptions();
         List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+        Objects = PackConstructor.instance.CurrentThemePack.Objects;
         foreach (PlaceableObject category in Objects)
         {
             Dropdown.OptionData option = new Dropdown.OptionData
@@ -106,6 +104,7 @@ public class LocationEditor : DndEditor
 
     public override void Edit<T>(T objectToEdit)
     {
+        UpdateView();
         base.Edit(objectToEdit);
         ShowBaseInfo(objectToEdit);
         Location converted = objectToEdit as Location;

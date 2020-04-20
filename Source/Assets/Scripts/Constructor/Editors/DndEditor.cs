@@ -13,10 +13,8 @@ public class DndEditor : MonoBehaviour
     public InputField DescriptionField;
 
     public Image CurrentImageSprite;
+    [HideInInspector]
     public string CurrentImageBase64;
-
-    public float MaxW = 450;
-    public float MaxH = 450;
 
     public ImageHandler imageHandler;
 
@@ -27,15 +25,38 @@ public class DndEditor : MonoBehaviour
 
     public virtual void Start()
     {
-        imageHandler = new ImageHandler();
-        imageHandler.MaxH = MaxH;
-        imageHandler.MaxW = MaxW;
+        //imageHandler = new ImageHandler();
     }
 
     public void ShowBaseInfo(DndObject objectToEdit)
     {
         NameField.text = objectToEdit.Name;
         DescriptionField.text = objectToEdit.Description;
+    }
+
+    public bool AttributesNotChangedIn(List<Attribute> objectAttributes)
+    {
+        List<Attribute> packAttributes = PackConstructor.instance.CurrentThemePack.Attributes;
+        if (objectAttributes.Count != packAttributes.Count)
+            return false;
+
+        for (int i = 0; i < packAttributes.Count; i++)
+        {
+            if (packAttributes[i].Name != objectAttributes[i].Name)
+                return false;
+        }
+
+        return true;
+    }
+
+    public List<Attribute> CloneAttributes(List<Attribute> oldList)
+    {
+        List<Attribute> newList = new List<Attribute>();
+        foreach (Attribute a in oldList)
+        {
+            newList.Add(new Attribute(a));
+        }
+        return newList;
     }
 
     public void SaveBaseInfo(DndObject toSave)
@@ -77,9 +98,11 @@ public class DndEditor : MonoBehaviour
         NameField.text = "";
         DescriptionField.text = "";
         CurrentImageBase64 = "";
-        if(CurrentImageSprite)
+        if (CurrentImageSprite)
+        {
             CurrentImageSprite.sprite = null;
-        CurrentImageSprite.rectTransform.sizeDelta = Vector2.zero;
+            CurrentImageSprite.rectTransform.sizeDelta = Vector2.zero;
+        }
     }
 }
 

@@ -15,11 +15,13 @@ public class ObjectEditor : DndEditor
     {
         base.Start();
         Categories = PackConstructor.instance.CurrentThemePack.Categories;
-        CreateCategory("Объекты");
+        if(Categories.Count == 0)
+            CreateCategory("Объекты");
     }
 
     public override void Edit<T>(T objectToEdit)
     {
+        UpdateView();
         base.Edit(objectToEdit);
         ShowBaseInfo(objectToEdit);
         PlaceableObject converted = objectToEdit as PlaceableObject;

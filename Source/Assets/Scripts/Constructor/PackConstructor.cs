@@ -16,11 +16,19 @@ public class PackConstructor : MonoBehaviour
     public ScrollViewHandler PlaceableHandler;
     public ScrollViewHandler LocationsHandler;
     public ScrollViewHandler AvatarsHandler;
+    public ScrollViewHandler AttributesHandler;
+    public ScrollViewHandler EffectsHandler;
+    public ScrollViewHandler EquipmentHandler;
+    public ScrollViewHandler EventHandler;
 
     [Header("Editors")]
     public ObjectEditor PlaceableEditor;
     public LocationEditor LocationsEditor;
-    public AvatarEditor AvatarEditor;
+    public AvatarEditor AvatarsEditor;
+    public AttributeEditor AttributesEditor;
+    public EffectEditor EffectsEditor;
+    public EquipmentEditor EquipmentsEditor;
+    public EventEditor EventsEditor;
 
     [Header ("Current Pack")]
     public ThemePack CurrentThemePack = new ThemePack();
@@ -29,12 +37,17 @@ public class PackConstructor : MonoBehaviour
     {
         PlaceableHandler.Update(CurrentThemePack.Objects, PlaceableEditor);
         LocationsHandler.Update(CurrentThemePack.Locations, LocationsEditor);
-        AvatarsHandler.Update(CurrentThemePack.Avatars, AvatarEditor);
+        AvatarsHandler.Update(CurrentThemePack.Avatars, AvatarsEditor);
+        AttributesHandler.Update(CurrentThemePack.Attributes, AttributesEditor);
+        EffectsHandler.Update(CurrentThemePack.Effects, EffectsEditor);
+        EquipmentHandler.Update(CurrentThemePack.InventoryItems, EquipmentsEditor);
+        EventHandler.Update(CurrentThemePack.Events, EventsEditor);
     }
 
     public void Awake()
     {
         instance = this;
+        UpdateView();
     }
 
     public void Save()
@@ -50,9 +63,12 @@ public class PackConstructor : MonoBehaviour
     {
         string Message;
         CurrentThemePack = saveLoadManager.Load(out Message);
-        UpdateView();
-        NameField.text = CurrentThemePack.Name;
-        DescriptionField.text = CurrentThemePack.Description;
+        if(CurrentThemePack != null)
+        {
+            UpdateView();
+            NameField.text = CurrentThemePack.Name;
+            DescriptionField.text = CurrentThemePack.Description;
+        }
         Debug.Log(Message);
     }
 }
