@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class DiceComponent : MonoBehaviour
 {
     public string Result;
+    public int diceCount;
 
     public string GetResult()
     {
@@ -26,7 +27,12 @@ public class DiceComponent : MonoBehaviour
             Result += ".";
             yield return new WaitForSeconds(0.4F);
         }
-        
-        Result = "Выпало " + Random.Range(1, n + 1);
+        diceCount = Random.Range(1, n + 1);
+        Result = "Выпало " + diceCount;
+    }
+
+    public int GetDiceCount()
+    {
+        return diceCount;
     }
 }
