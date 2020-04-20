@@ -6,7 +6,7 @@ public class CommonEntity : Entity
 {
     public MotorComponent Motor;
     public DiceComponent Dice;
-    public MapComponent Map;
+    public MarkerComponent Marker;
 
 
     // Start is called before the first frame update

@@ -11,12 +11,6 @@ public class MapComponent : EntityComponent
     BoxCollider boxCollider;
     public string[] MapsList;
     public Texture2D[] textures;
-    public Button MarkButton;
-    public bool MarkAddMode;
-    public Vector3 MarkPosition = Vector3.zero;
-    public LayerMask layerMask;
-    public GameObject MarkPrefab;
-    public  List<GameObject> MarkLists;
 
     public override void Start()
     {
@@ -25,7 +19,6 @@ public class MapComponent : EntityComponent
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider>();
         boxCollider.size = spriteRenderer.sprite.bounds.size;
-        MarkAddMode = false;
         MenuFill();
     }
 
@@ -34,8 +27,6 @@ public class MapComponent : EntityComponent
         if (spriteRenderer.sprite == null) spriteRenderer.sprite = Sprite.Create(new Texture2D(100, 100), new Rect(0, 0, 100, 100), new Vector2(0, 0));
         boxCollider.size = spriteRenderer.sprite.bounds.size;
 
-        if (MarkAddMode == true)
-            AddMark();
     }
 
     void MenuFill()
@@ -57,39 +48,5 @@ public class MapComponent : EntityComponent
         string spritePath = "TestMaps/" + MapsList[MapSelectMenu.value].Substring(lastIndex);
         Debug.Log(MapSelectMenu.value);
         spriteRenderer.sprite = Sprite.Create(textures[MapSelectMenu.value], new Rect(0, 0, textures[MapSelectMenu.value].width, textures[MapSelectMenu.value].height), new Vector2(.5f, .5f)); //Resources.Load<Sprite>(spritePath.Substring(0,spritePath.Length-4));
-    }
-
-    public void ChangeMarkMode()
-    {
-        MarkAddMode = !MarkAddMode;
-    }
-
-    public void AddMark()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Добавление марки на карту");
-            Debug.Log("ЛКМ нажата");
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit, layerMask))
-            {
-                MarkPosition = new Vector3(hit.point.x, 0, hit.point.z);
-                Debug.Log(MarkPosition);
-                GameObject obj = Instantiate(MarkPrefab, MarkPosition, Quaternion.identity) as GameObject;
-                MarkAddMode = false;
-                obj.transform.SetParent(GameObject.Find("Area").transform);
-                MarkLists.Add(obj);
-                MarkComponent markComponent = obj.GetComponent<MarkComponent>();
-                markComponent.SetupID(MarkLists.IndexOf(obj));
-            }
-        }
-    }
-
-    public void DestroyMark(GameObject obj)
-    {
-        MarkLists.Remove(obj);
-        Destroy(obj);
     }
 }

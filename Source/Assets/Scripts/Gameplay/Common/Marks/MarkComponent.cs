@@ -5,16 +5,14 @@ using UnityEngine.UI;
 
 public class MarkComponent : MonoBehaviour
 {
-    public MapComponent Map;
+    public MarkerComponent Marker;
     public MarkData Data;
     public Text MarkName;
     public Text Input;
 
     public void DestroyMark(GameObject obj)
     {
-        
-        Map = GetComponentInParent<MapComponent>();
-        Map.DestroyMark(obj);
+        Marker.DestroyMark(obj);
     }
 
     public void SetupMark(MarkData data)
