@@ -12,16 +12,13 @@ public class PlayerInfoComponent : MonoBehaviour
     {
         PlayerListInfo = GameObject.Instantiate(PlayerListInfoPref, GameObject.Find("PlayerUI").transform);
         GetComponent<RectTransform>().transform.position = new Vector3(-335, 181, 0);
-        PlayerListInfoPref.GetComponent<GameObject>().SetActive(false);
+        PlayerListInfo.SetActive(false);
         playerData = GetComponentInParent<PlayerData>();
     }
 
     public void ShowAndHide()
     {
-        if (PlayerListInfo.activeSelf == false)
-            PlayerListInfo.SetActive(true);
-        else
-            PlayerListInfo.SetActive(false);
+        PlayerListInfo.SetActive(!PlayerListInfo.activeSelf);
     }
 
     public void ShowInventory()
