@@ -3,38 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Controller
 {
-    public LayerMask layerMask;
+    public LayerMask LayerMask;
     public Vector3 NewPosition = Vector3.zero;
-    public PlayerEntity playerEntity;
+    public CommonEntity Common;
     public Text Result;
     
-    void Update()
+    public void Update()
     {
         Movement();
-        Result.text = playerEntity.GetDice();
+        Common.GetDiceResult();
     }
 
     public void Movement()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("ПКМ нажата");
+            //Debug.Log("ПКМ нажата");
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, layerMask))
+            if (Physics.Raycast(ray, out hit, LayerMask))
             {
                 NewPosition = new Vector3(hit.point.x, 0, hit.point.z);
-                Debug.Log(NewPosition);
+                //Debug.Log(NewPosition);
             }
         }
-        playerEntity.MoveTo(NewPosition);
+        Common.MoveTo(NewPosition);
     }
 
     public void CallDice(int n)
     {
-        playerEntity.CallDice(n);
+        Common.CallDice(n);
     }
 }

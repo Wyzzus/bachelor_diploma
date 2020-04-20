@@ -12,7 +12,7 @@ public class Controller : MonoBehaviour
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    void Update()
     {
         
     }

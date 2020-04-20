@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapComponent : MonoBehaviour
+public class MapComponent : EntityComponent
 {
     public Dropdown MapSelectMenu;
     SpriteRenderer spriteRenderer;
@@ -18,8 +18,9 @@ public class MapComponent : MonoBehaviour
     public GameObject MarkPrefab;
     public  List<GameObject> MarkLists;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         textures = Resources.LoadAll<Texture2D>("TestMaps/");
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider>();
@@ -60,8 +61,7 @@ public class MapComponent : MonoBehaviour
 
     public void ChangeMarkMode()
     {
-        if (MarkAddMode == false)
-            MarkAddMode = true;
+        MarkAddMode = !MarkAddMode;
     }
 
     public void AddMark()
