@@ -7,6 +7,7 @@ public class PlayerData
 {
     public string Name;
     public int skinID;
+    public string RollCount;
     public List<int> Inventory;
     public List<int> Equipment;
 }

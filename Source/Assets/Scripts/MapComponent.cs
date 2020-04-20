@@ -83,7 +83,6 @@ public class MapComponent : MonoBehaviour
                 MarkLists.Add(obj);
                 MarkComponent markComponent = obj.GetComponent<MarkComponent>();
                 markComponent.SetupID(MarkLists.IndexOf(obj));
-                
             }
         }
     }

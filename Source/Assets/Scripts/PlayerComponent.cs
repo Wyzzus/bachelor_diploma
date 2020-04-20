@@ -22,6 +22,11 @@ public class PlayerComponent : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        SetupRollCount();
+    }
+
     public void SetupPlayerData(PlayerData data)
     {
         playerData = data;
@@ -47,5 +52,10 @@ public class PlayerComponent : MonoBehaviour
     public void SetupName()
     {
         playerData.Name = GameObject.Find("nickname").GetComponent<Text>().text;
+    }
+
+    public void SetupRollCount()
+    {
+        playerData.RollCount = GameObject.Find("RollResult").GetComponent<Text>().text;
     }
 }
