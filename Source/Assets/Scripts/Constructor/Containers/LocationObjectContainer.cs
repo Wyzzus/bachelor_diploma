@@ -20,10 +20,10 @@ public class LocationObjectContainer : DataContainer
             MaxW = 50
         };
         LocationEditor editor = (LocationEditor)Editor;
-
+        PlaceableObject obj = (PlaceableObject)Data;
         if (editor.CurrentPlaceableObject.Image != null)
         {
-            im.ShowImage(editor.CurrentPlaceableObject.Image, image);
+            im.ShowImage(obj.Image, image);
         }
 
         yield return null;
@@ -38,5 +38,13 @@ public class LocationObjectContainer : DataContainer
     public void ConvertPosition(Vector2 uiPos)
     {
 
+    }
+
+    public override void Remove()
+    {
+        LocationEditor editor = (LocationEditor)Editor;
+        PlaceableObject obj = (PlaceableObject)Data;
+        editor.RemoveObjectFromMap(obj);
+        base.Remove();
     }
 }
