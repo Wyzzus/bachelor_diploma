@@ -18,7 +18,7 @@ public class GameManager : EntitySystem
     public void Start()
     {
         saveLoadManager = new SaveLoadManager();
-        string path = @"C:\Users\Wyzzus\Desktop\PackLol.hgd";
+        string path = @"C:\Users\Wyzzus\Desktop\Test.hgd";
         string message = "";
         CurrentThemePack = saveLoadManager.Load(path, out message);
         Debug.Log(message);

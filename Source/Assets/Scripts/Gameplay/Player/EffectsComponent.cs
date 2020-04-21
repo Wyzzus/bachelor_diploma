@@ -15,24 +15,26 @@ public class EffectsComponent : EntityComponent
         base.Start();
     }
 
-    public void SetupEffects(List<int> effectsIds)
+    public void SetupEffects(PlayerData Data)
     {
-        CurrentEffects.Clear();
-        for(int i = 0; i < effectsIds.Count; i++)
-        {
-            Effect newEffect = new Effect(); //Get Effect by Id
-            CurrentEffects.Add(newEffect);
-        }
-        UpdateView();
+        UpdateView(Data.Effects);
     }
 
-    public void UpdateView()
+    public void UpdateView(List<int> effectsIds)
     {
-        EffectsHandler.UpdateOnComponent(CurrentEffects, this);
+        EffectsHandler.UpdateOnComponent(effectsIds, typeof(Effect), this);
+        if (effectsIds.Count > 0)
+            Display(effectsIds[0]);
     }
 
-    public void ShowEffect(Effect effect)
+    public override void Display(int ID)
     {
-        UIPart.ShowObject(effect);
+        Effect effect = GameManager.instance.CurrentThemePack.Effects[ID];
+        string Description = "<b>" + effect.Name + "</b>";
+        Description += "\n" + effect.Description + "\n";
+        Description += "<b>Виляние на атрибуты:</b>\n";
+        Description += GetAttributesDesctiption(effect);
+
+        UIPart.Name.text = Description;
     }
 }

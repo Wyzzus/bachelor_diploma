@@ -122,13 +122,13 @@ public class ScrollViewHandler
         }
     }
 
-    public void UpdateOnComponent<T>(List<T> ObjectList, EntityComponent component = null) where T : DndObject
+    public void UpdateOnComponent(List<int> ObjectIdsList, System.Type type, EntityComponent component = null)
     {
         ClearContent();
-        foreach (DndObject obj in ObjectList)
+        foreach (int Id in ObjectIdsList)
         {
             GameObject clone = GameObject.Instantiate<GameObject>(prefab, content);
-            //clone.GetComponent<DataContainer>().Setup(obj, component);
+            clone.GetComponent<GameDataContainer>().Setup(Id, type, component);
         }
     }
 

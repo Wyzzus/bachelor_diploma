@@ -70,11 +70,13 @@ public class DndObjectUI
     public Text Descripion;
     public Image ImageView;
 
-    public void ShowObject(DndObject dndObject, IDisplayable displayable = null)
+    public ImageHandler ImageHandler;
+
+    public void ShowObject(DndObject dndObject)
     {
         if(Name) Name.text = dndObject.Name;
         if(Descripion) Descripion.text = dndObject.Description;
-        if(ImageView) ImageView.sprite = displayable.GetSprite();
+        if(ImageView) ImageHandler.ShowImage(((IDisplayable)dndObject).Image, ImageView);
     }
 }
 
