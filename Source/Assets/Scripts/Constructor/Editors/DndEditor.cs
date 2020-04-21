@@ -114,14 +114,29 @@ public class ScrollViewHandler
 
     public void Update<T>(List<T> ObjectList, DndEditor editor = null) where T : DndObject
     {
-        foreach(RectTransform child in content)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
+        ClearContent();
         foreach(DndObject obj in ObjectList)
         {
             GameObject clone = GameObject.Instantiate<GameObject>(prefab, content);
             clone.GetComponent<DataContainer>().Setup(obj, editor);
+        }
+    }
+
+    public void UpdateOnComponent(List<int> ObjectIdsList, System.Type type, EntityComponent component = null)
+    {
+        ClearContent();
+        foreach (int Id in ObjectIdsList)
+        {
+            GameObject clone = GameObject.Instantiate<GameObject>(prefab, content);
+            clone.GetComponent<GameDataContainer>().Setup(Id, type, component);
+        }
+    }
+
+    public void ClearContent()
+    {
+        foreach (RectTransform child in content)
+        {
+            GameObject.Destroy(child.gameObject);
         }
     }
 }

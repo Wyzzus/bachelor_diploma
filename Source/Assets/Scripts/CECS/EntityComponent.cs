@@ -16,4 +16,28 @@ public class EntityComponent : MonoBehaviour
     {
         
     }
+
+    public virtual void Display(int ID)
+    {
+
+    }
+
+    public string GetAttributesDesctiption(IAttributeInteractable obj)
+    {
+        string attributes = "";
+        foreach (Attribute a in obj.Attributes)
+        {
+            if (a.Value != 0)
+            {
+                attributes += a.Name + ": ";
+
+                if (a.Value > 0)
+                    attributes += "<color=lime>+" + a.Value.ToString() + "</color>\n";
+
+                if (a.Value < 0)
+                    attributes += "<color=red>" + a.Value.ToString() + "</color>\n";
+            }
+        }
+        return attributes;
+    }
 }

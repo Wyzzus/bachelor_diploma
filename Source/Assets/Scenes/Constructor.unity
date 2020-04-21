@@ -3360,7 +3360,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 368345650}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999997
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3996,7 +3996,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1949953456}
   m_HandleRect: {fileID: 1949953455}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6790,8 +6790,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1435458137}
   m_HandleRect: {fileID: 1435458136}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.9999998
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8318,7 +8318,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1070545134}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &711610216
@@ -12467,7 +12467,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1070545134}
+  m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &973552779
@@ -13517,40 +13517,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066370532}
   m_CullTransparentMesh: 0
---- !u!1 &1070545133
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1070545134}
-  m_Layer: 0
-  m_Name: Constructor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1070545134
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1070545133}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 705507995}
-  - {fileID: 1653273588}
-  - {fileID: 963194228}
-  - {fileID: 1124255542}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1072022501
 GameObject:
   m_ObjectHideFlags: 0
@@ -14391,7 +14357,6 @@ GameObject:
   - component: {fileID: 1124255540}
   - component: {fileID: 1124255539}
   - component: {fileID: 1124255543}
-  - component: {fileID: 1124255544}
   m_Layer: 5
   m_Name: PackConstructor
   m_TagString: Untagged
@@ -14472,7 +14437,7 @@ RectTransform:
   m_Children:
   - {fileID: 217918743}
   - {fileID: 1074188194}
-  m_Father: {fileID: 1070545134}
+  m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -14492,7 +14457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efdd43f0383856641a3feb8c19ea194e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveLoadManager: {fileID: 1124255544}
   NameField: {fileID: 1544133803}
   DescriptionField: {fileID: 216755971}
   PlaceableHandler:
@@ -14541,18 +14505,6 @@ MonoBehaviour:
     Effects: []
     Attributes: []
     Events: []
---- !u!114 &1124255544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1124255538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 513bd4e810a27834cb5db0c39947fda7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1134841523
 GameObject:
   m_ObjectHideFlags: 0
@@ -17965,8 +17917,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1082494304}
   m_HandleRect: {fileID: 1082494303}
   m_Direction: 0
-  m_Value: 0.00000011834891
-  m_Size: 0.42053685
+  m_Value: 0.000000118388776
+  m_Size: 0.42073208
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -20994,7 +20946,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1070545134}
+  m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1654953239
@@ -21946,8 +21898,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 817492613}
   m_HandleRect: {fileID: 817492612}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -22955,7 +22907,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 199490162}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23804,7 +23756,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2101392554}
   m_HandleRect: {fileID: 2101392553}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -25103,8 +25055,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1119795597}
   m_HandleRect: {fileID: 1119795596}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

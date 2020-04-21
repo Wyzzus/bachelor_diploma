@@ -9,9 +9,10 @@ public class PlayerData
     public int Skin;
     public string Dice;
 
-    public List<float> AttributesValues;
-    public List<int> Effects;
+    public List<float> BaseAttributes;
+    public List<float> AdditionalAttributes;
 
+    public List<int> Effects;
     public List<int> Inventory;
     public List<int> Equipment;
 
@@ -23,4 +24,9 @@ public class Marker
 {
     public string Name;
     public Vector3Ser Position;
+
+    public Marker()
+    {
+
+    }
 }

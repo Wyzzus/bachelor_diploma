@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class DndObject
@@ -59,6 +60,23 @@ public class Vector3Ser
     public Vector3 ToVector3()
     {
         return new Vector3(this.x, this.y, this.z);
+    }
+}
+
+[System.Serializable]
+public class DndObjectUI
+{
+    public Text Name;
+    public Text Descripion;
+    public Image ImageView;
+
+    public ImageHandler ImageHandler;
+
+    public void ShowObject(DndObject dndObject)
+    {
+        if(Name) Name.text = dndObject.Name;
+        if(Descripion) Descripion.text = dndObject.Description;
+        if(ImageView) ImageHandler.ShowImage(((IDisplayable)dndObject).Image, ImageView);
     }
 }
 

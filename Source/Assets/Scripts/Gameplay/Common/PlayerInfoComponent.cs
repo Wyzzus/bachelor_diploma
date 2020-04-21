@@ -1,9 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInfoComponent : EntityComponent
 {
+    public PlayerData Data;
+    
+    [Header ("UI")]
+    public InputField Name;
+    public Dropdown SkinSelector;
+
+    public DndObjectUI PlayerMarker;
 
     // Start is called before the first frame update
     public override void Start()
@@ -11,9 +19,18 @@ public class PlayerInfoComponent : EntityComponent
         base.Start();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void FillSkinSelector(List<Avatar> Skins)
     {
-        
+        SkinSelector.ClearOptions();
+        List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+        foreach (Avatar a in Skins)
+        {
+            Dropdown.OptionData option = new Dropdown.OptionData
+            {
+                text = a.Name
+            };
+            options.Add(option);
+        }
+        SkinSelector.AddOptions(options);
     }
 }

@@ -6,10 +6,9 @@ public class CommonEntity : Entity
 {
     public MotorComponent Motor;
     public DiceComponent Dice;
-    public MapComponent Map;
-
-
-    // Start is called before the first frame update
+    public MarkerComponent Marker;
+    public PlayerInfoComponent PlayerInfo;
+    
     public override void Start()
     {
         base.Start();
@@ -20,10 +19,27 @@ public class CommonEntity : Entity
         Motor.MoveTo(pos);
     }
 
-
     public void CallDice(int n)
     {
         Dice.DiceRoll(n);
+    }
+
+    public void SetupPlayerInfo()
+    {
+        PlayerInfo.FillSkinSelector(GameManager.instance.CurrentThemePack.Avatars);
+    }
+
+    #region Getters
+
+
+    public string GetName()
+    {
+        return PlayerInfo.Name.text;
+    }
+
+    public int GetSkin()
+    {
+        return PlayerInfo.SkinSelector.value;
     }
 
     public string GetDiceResult()
@@ -31,5 +47,7 @@ public class CommonEntity : Entity
         return Dice.GetResult();
     }
 
+    //public 
 
+    #endregion
 }
