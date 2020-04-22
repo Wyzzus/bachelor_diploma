@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class PlayerController : Controller
+public class PlayerController : MonoBehaviourPun, IPunObservable
 {
     public LayerMask LayerMask;
     public Vector3 NewPosition = Vector3.zero;
@@ -18,9 +19,23 @@ public class PlayerController : Controller
     public PlayerData Data;
     public GameDataContainer Skin;
 
-    public override void Start()
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        base.Start();
+        /*if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else if (stream.IsReading)
+        {
+            transform.position = (Vector3)stream.ReceiveNext();
+            transform.rotation = (Quaternion)stream.ReceiveNext();
+        }
+        */
+    }
+
+    public void Start()
+    {
         //Data = new PlayerData();
         Common.SetupPlayerInfo();
         SetupEffects();

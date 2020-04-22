@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             Debug.Log("Нажат пробел");
-            transform.position = PlayerPosition.transform.position;
+            //transform.position = PlayerPosition.transform.position;
             MainCamera.transform.localPosition = new Vector3(0, 0, -14);
         }
         CameraPosition = MainCamera.transform.localPosition;
