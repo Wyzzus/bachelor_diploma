@@ -27,13 +27,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(Data);
+            stream.SendNext(Data.Name);
         }
         else if (stream.IsReading)
         {
-            /*transform.position = (Vector3)stream.ReceiveNext();
-            transform.rotation = (Quaternion)stream.ReceiveNext();*/
-            Data = (PlayerData)stream.ReceiveNext();
+            Data.Name = (string)stream.ReceiveNext();
         }
     }
 
