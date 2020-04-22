@@ -51,9 +51,12 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     
     public void Update()
     {
-        Movement();
-        if(isLocal)
+        isLocal = base.photonView.IsMine;
+        if (isLocal)
+        {
+            Movement();
             SetPlayerInfo();
+        }
         GetPlayerInfo();
     }
 
