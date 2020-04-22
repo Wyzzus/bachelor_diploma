@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     public PlayerData Data;
     public GameDataContainer Skin;
+    public bool CanUpdate = false;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -61,6 +62,13 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         isLocal = base.photonView.IsMine;
         HandleInterfaces();
+        StartCoroutine(DelayedStart());
+    }
+
+    public IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(1);
+        CanUpdate = true;
         Common.SetupPlayerInfo();
         SetupEffects();
         SetupInventory();
@@ -75,12 +83,15 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     
     public void Update()
     {
-        if (isLocal)
+        if(CanUpdate)
         {
-            Movement();
-            SetPlayerInfo();
+            if (isLocal)
+            {
+                Movement();
+                SetPlayerInfo();
+            }
+            GetPlayerInfo();
         }
-        GetPlayerInfo();
     }
 
     public void FixedUpdate()
@@ -130,6 +141,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         PlayerName.text = Data.Name;
         if(Skin.DataID != Data.Skin)
         {
+            Debug.Log(42 + " " + GameManager.instance.CurrentThemePack.Name);
             Skin.UIPart.ImageHandler.ShowImage(GameManager.instance.CurrentThemePack.Avatars[Data.Skin].Image, Skin.UIPart.ImageView);
             Skin.DataID = Data.Skin;
         }
