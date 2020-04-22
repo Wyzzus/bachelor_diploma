@@ -25,17 +25,16 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        /*if (stream.IsWriting)
+        if (stream.IsWriting)
         {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            stream.SendNext(Data);
         }
         else if (stream.IsReading)
         {
-            transform.position = (Vector3)stream.ReceiveNext();
-            transform.rotation = (Quaternion)stream.ReceiveNext();
+            /*transform.position = (Vector3)stream.ReceiveNext();
+            transform.rotation = (Quaternion)stream.ReceiveNext();*/
+            Data = (PlayerData)stream.ReceiveNext();
         }
-        */
     }
 
     public void HandleInterfaces()
