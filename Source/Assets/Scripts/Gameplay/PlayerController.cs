@@ -30,14 +30,14 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(Data.Name);
-            stream.SendNext(Data.Skin);
-            stream.SendNext(Data.Dice);
+            //stream.SendNext(Data.Skin);
+            //stream.SendNext(Data.Dice);
         }
         else if (stream.IsReading)
         {
             Data.Name = (string)stream.ReceiveNext();
-            Data.Skin = (int)stream.ReceiveNext();
-            Data.Dice = (string)stream.ReceiveNext();
+            //Data.Skin = (int)stream.ReceiveNext();
+            //Data.Dice = (string)stream.ReceiveNext();
         }
     }
 
