@@ -30,14 +30,54 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(Data.Name);
-            //stream.SendNext(Data.Skin);
-            //stream.SendNext(Data.Dice);
+            stream.SendNext(Data.Dice);
+            stream.SendNext(Data.Skin);
+
+            stream.SendNext(Data.BaseAttributes.Count);
+            foreach(float value in Data.BaseAttributes)
+                stream.SendNext(value);
+
+            stream.SendNext(Data.AdditionalAttributes.Count);
+            foreach (float value in Data.AdditionalAttributes)
+                stream.SendNext(value);
+
+            stream.SendNext(Data.Effects.Count);
+            foreach (int value in Data.Effects)
+                stream.SendNext(value);
+
+            stream.SendNext(Data.Inventory.Count);
+            foreach (int value in Data.Inventory)
+                stream.SendNext(value);
+
+            stream.SendNext(Data.Equipment.Count);
+            foreach (int value in Data.Equipment)
+                stream.SendNext(value);
         }
         else if (stream.IsReading)
         {
             Data.Name = (string)stream.ReceiveNext();
-            //Data.Skin = (int)stream.ReceiveNext();
-            //Data.Dice = (string)stream.ReceiveNext();
+            Data.Dice = (string)stream.ReceiveNext();
+            Data.Skin = (int)stream.ReceiveNext();
+
+            int count = (int)stream.ReceiveNext();
+            for(int i = 0; i < count; i++)
+                Data.BaseAttributes[i] = (float)stream.ReceiveNext();
+
+            count = (int)stream.ReceiveNext();
+            for (int i = 0; i < count; i++)
+                Data.AdditionalAttributes[i] = (float)stream.ReceiveNext();
+
+            count = (int)stream.ReceiveNext(); Data.Effects.Clear();
+            for (int i = 0; i < count; i++)
+                Data.Effects.Add((int)stream.ReceiveNext());
+
+            count = (int)stream.ReceiveNext(); Data.Inventory.Clear();
+            for (int i = 0; i < count; i++)
+                Data.Inventory.Add((int)stream.ReceiveNext());
+
+            count = (int)stream.ReceiveNext(); Data.Equipment.Clear();
+            for (int i = 0; i < count; i++)
+                Data.Equipment.Add((int)stream.ReceiveNext());
         }
     }
 
