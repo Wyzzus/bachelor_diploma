@@ -9,7 +9,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public LayerMask LayerMask;
     public Vector3 NewPosition = Vector3.zero;
     public CommonEntity Common;
+    public GameObject[] CommonInterfaces;
     public PlayerEntity Player;
+    public GameObject[] PlayerInterfaces;
+
+    public GameObject[] GMInterfaces;
 
     public Text Result;
     public Text PlayerName;
@@ -34,9 +38,32 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         */
     }
 
+    public void HandleInterfaces()
+    {
+        if (isLocal)
+        {
+
+        }
+        else
+        {
+            SetupIntgerface(CommonInterfaces, false);
+            SetupIntgerface(PlayerInterfaces, false);
+            SetupIntgerface(GMInterfaces, false);
+        }
+    }
+
+    public void SetupIntgerface(GameObject[] interfaces, bool flag)
+    {
+        foreach (GameObject obj in interfaces)
+        {
+            obj.SetActive(flag);
+        }
+    }
+
     public void Start()
     {
-        //Data = new PlayerData();
+        isLocal = base.photonView.IsMine;
+        HandleInterfaces();
         Common.SetupPlayerInfo();
         SetupEffects();
         SetupInventory();
@@ -51,7 +78,6 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     
     public void Update()
     {
-        isLocal = base.photonView.IsMine;
         if (isLocal)
         {
             Movement();
