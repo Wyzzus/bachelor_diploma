@@ -85,17 +85,27 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (isLocal)
         {
-
+            SetupInterface(CommonInterfaces, true);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                SetupInterface(GMInterfaces, true);
+                SetupInterface(PlayerInterfaces, false);
+            }
+            else
+            {
+                SetupInterface(GMInterfaces, false);
+                SetupInterface(PlayerInterfaces, true);
+            }
         }
         else
         {
-            SetupIntgerface(CommonInterfaces, false);
-            SetupIntgerface(PlayerInterfaces, false);
-            SetupIntgerface(GMInterfaces, false);
+            SetupInterface(CommonInterfaces, false);
+            SetupInterface(PlayerInterfaces, false);
+            SetupInterface(GMInterfaces, false);
         }
     }
 
-    public void SetupIntgerface(GameObject[] interfaces, bool flag)
+    public void SetupInterface(GameObject[] interfaces, bool flag)
     {
         foreach (GameObject obj in interfaces)
         {
@@ -106,6 +116,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public void Start()
     {
         isLocal = base.photonView.IsMine;
+        Data.PlayerId = base.photonView.ViewID;
+        GameManager.instance.Players.Add(this);
         HandleInterfaces();
         StartCoroutine(DelayedStart());
     }
@@ -209,6 +221,56 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public void SetupAttributes()
     {
         Player.SetupAttributes(Data);
+    }
+
+    #endregion
+
+
+    #region GM
+
+    [PunRPC]
+    public void AddItem(int id)
+    {
+        Player.Inventory.Add(id);
+    }
+
+    [PunRPC]
+    public void RemoveItem(int id)
+    {
+        Player.Inventory.Remove(id);
+    }
+
+    [PunRPC]
+    public void SetAtribute(float value, int index)
+    {
+        Data.BaseAttributes[index] = value;
+    }
+
+    [PunRPC]
+    public void AddEffect(int id)
+    {
+        Player.Effects.Add(id);
+    }
+
+    [PunRPC]
+    public void RemoveEffect(int id)
+    {
+        Player.Effects.Remove(id);
+    }
+
+    [PunRPC]
+    public void GenerateEvent(int id, int playerId)
+    {
+
+    }
+
+    #endregion
+
+    #region Networking
+
+    void OnPhotonPlayerConnected(Photon.Realtime.Player newPlayer)
+    {
+        GameManager.instance.Players = new List<PlayerController>(GameObject.FindObjectsOfType<PlayerController>());
     }
 
     #endregion

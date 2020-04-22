@@ -10,6 +10,13 @@ public class GameManager : EntitySystem
 
     public ThemePack CurrentThemePack;
 
+    public MapComponent Map;
+    public GameObject EventInfo;
+
+    public DndObjectUI UIPart;
+    public List<PlayerController> Players = new List<PlayerController>();
+
+
     public void Awake()
     {
         instance = this;
@@ -22,5 +29,15 @@ public class GameManager : EntitySystem
         string message = "";
         CurrentThemePack = saveLoadManager.Load(path, out message);
         Debug.Log(message);
+    }
+    
+    public void SetMap(int id)
+    {
+        Debug.Log("Set map to " + id);
+    }
+
+    public void GenerateEvent(int id, int playerId)
+    {
+
     }
 }
