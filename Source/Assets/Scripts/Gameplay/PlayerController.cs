@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     public bool isLocal;
 
+    [SerializeField]
     public PlayerData Data;
     public GameDataContainer Skin;
     public bool CanUpdate = false;
@@ -28,11 +29,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(Data.Name);
+            stream.SendNext(Data);
         }
         else if (stream.IsReading)
         {
-            Data.Name = (string)stream.ReceiveNext();
+            Data = (PlayerData)stream.ReceiveNext();
         }
     }
 
