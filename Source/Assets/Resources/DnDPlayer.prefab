@@ -3706,7 +3706,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5391155470107668872}
   m_HandleRect: {fileID: 5391155470107668875}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5010,7 +5010,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000045776367, y: 0}
+  m_AnchoredPosition: {x: -0.000030517578, y: 0}
   m_SizeDelta: {x: -5.2737594, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &5391155470088654391
@@ -5569,7 +5569,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5391155470825260210}
   m_HandleRect: {fileID: 5391155470825260213}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9370,7 +9370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0}
   m_SizeDelta: {x: -5.2737594, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &5391155470780530580
@@ -9954,7 +9954,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5391155470525960368}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14217,7 +14217,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5391155470045411597}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14982,7 +14982,15 @@ MonoBehaviour:
     m_Bits: 51
   NewPosition: {x: 0, y: 0, z: 0}
   Common: {fileID: 5391155470027250445}
+  CommonInterfaces:
+  - {fileID: 5391155469779974499}
+  - {fileID: 5391155470300694871}
+  - {fileID: 5391155471333546116}
   Player: {fileID: 5391155469897372705}
+  PlayerInterfaces:
+  - {fileID: 5391155469815711334}
+  - {fileID: 5391155470143276029}
+  GMInterfaces: []
   Result: {fileID: 5391155470010588253}
   PlayerName: {fileID: 635790236073408129}
   isLocal: 1
