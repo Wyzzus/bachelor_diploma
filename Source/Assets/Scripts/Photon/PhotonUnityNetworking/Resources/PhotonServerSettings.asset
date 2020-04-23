@@ -35,5 +35,14 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - RPC_ChangeReadyState
+  - AddEffect
+  - AddItem
+  - GenerateEvent
+  - RemoveEffect
+  - RemoveItem
+  - SetAtribute
+  - ChangeMap
+  - SetMap
+  - UpdatePlayerView
   DisableAutoOpenWizard: 1
   ShowSettings: 1

@@ -12,13 +12,14 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public GameObject[] CommonInterfaces;
     public PlayerEntity Player;
     public GameObject[] PlayerInterfaces;
-
+    public GMEntity GM;
     public GameObject[] GMInterfaces;
 
     public Text Result;
     public Text PlayerName;
 
     public bool isLocal;
+    public bool isMaster;
 
     [SerializeField]
     public PlayerData Data;
@@ -86,7 +87,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         if (isLocal)
         {
             SetupInterface(CommonInterfaces, true);
-            if (PhotonNetwork.IsMasterClient)
+            if (isMaster)
             {
                 SetupInterface(GMInterfaces, true);
                 SetupInterface(PlayerInterfaces, false);
@@ -116,8 +117,17 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public void Start()
     {
         isLocal = base.photonView.IsMine;
+        isMaster = PhotonNetwork.IsMasterClient;
         Data.PlayerId = base.photonView.ViewID;
+
         GameManager.instance.Players.Add(this);
+
+        foreach (PlayerController pc in GameManager.instance.Players)
+        {
+            PhotonView view = PhotonView.Get(pc);
+            photonView.RPC("UpdatePlayerView", RpcTarget.All);
+        }
+
         HandleInterfaces();
         StartCoroutine(DelayedStart());
     }
@@ -125,12 +135,15 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public IEnumerator DelayedStart()
     {
         yield return new WaitForSeconds(1);
+        
+
         CanUpdate = true;
         Common.SetupPlayerInfo();
         SetupEffects();
         SetupInventory();
         SetupAttributes();
         GetPlayerInfo();
+        GM.SetupLocationsDropDown();
     }
 
     public void ChangeObjectActiveState(GameObject obj)
@@ -228,6 +241,64 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     #region GM
 
+    public void ClientSetMap(int index)
+    {
+        GameManager.instance.SetMap(index);
+        PhotonView view = PhotonView.Get(this);
+        photonView.RPC("SetMap", RpcTarget.All, index);
+    }
+
+    public void CallRpcOnPlayerWithId(string method, int playerId, int objId)
+    {
+        foreach (PlayerController pc in GameManager.instance.Players)
+        {
+            if (pc.Data.PlayerId == playerId)
+            {
+                PhotonView view = PhotonView.Get(this);
+                photonView.RPC(method, RpcTarget.All, objId);
+            }
+        }
+    }
+
+    public void ClientAddItem(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("AddItem", playerId, itemId);
+    }
+
+    public void ClientRemoveItem(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("RemoveItem", playerId, itemId);
+    }
+
+    public void ClientAddEffect(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("AddEffect", playerId, itemId);
+    }
+
+    public void ClientRemoveEffect(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("RemoveEffect", playerId, itemId);
+    }
+
+    public void ClientSetAttribute(int playerId, float value, int index)
+    {
+        foreach (PlayerController pc in GameManager.instance.Players)
+        {
+            if (pc.Data.PlayerId == playerId)
+            {
+                PhotonView view = PhotonView.Get(this);
+                photonView.RPC("SetAtribute", RpcTarget.All, value, index);
+            }
+        }
+    }
+
+    #region RPC
+    [PunRPC]
+    public void SetMap(int index)
+    {
+        GameManager.instance.SetMap(index);
+    }
+
     [PunRPC]
     public void AddItem(int id)
     {
@@ -264,13 +335,27 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     }
 
+    [PunRPC]
+    public void UpdatePlayerView()
+    {
+        Common.PlayerInfo.UpdatePlayerView(GM.GMInteraction);
+    }
+
+    #endregion
+
     #endregion
 
     #region Networking
 
-    void OnPhotonPlayerConnected(Photon.Realtime.Player newPlayer)
+    public void OnDestroy()
     {
-        GameManager.instance.Players = new List<PlayerController>(GameObject.FindObjectsOfType<PlayerController>());
+        GameManager.instance.Players.Remove(this);
+
+        foreach (PlayerController pc in GameManager.instance.Players)
+        {
+            PhotonView view = PhotonView.Get(pc);
+            photonView.RPC("UpdatePlayerView", RpcTarget.All);
+        }
     }
 
     #endregion

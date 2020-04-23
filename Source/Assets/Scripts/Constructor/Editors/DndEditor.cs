@@ -132,6 +132,16 @@ public class ScrollViewHandler
         }
     }
 
+    public void UpdatePlayersView(List<PlayerController> PlayerList, EntityComponent component)
+    {
+        ClearContent();
+        foreach (PlayerController pc in PlayerList)
+        {
+            GameObject clone = GameObject.Instantiate<GameObject>(prefab, content);
+            clone.GetComponent<PlayerContainer>().Setup(pc, component);
+        }
+    }
+
     public void ClearContent()
     {
         foreach (RectTransform child in content)
