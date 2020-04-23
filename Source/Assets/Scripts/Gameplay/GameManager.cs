@@ -18,7 +18,7 @@ public class GameManager : EntitySystem
     public void Start()
     {
         saveLoadManager = new SaveLoadManager();
-        string path = @"C:\Users\Wyzzus\Desktop\StalkerDND_2_0.hgd";
+        string path = @"C:\Users\Artur\Desktop\StalkerDND_2.0.hgd";
         string message = "";
         CurrentThemePack = saveLoadManager.Load(path, out message);
         Debug.Log(message);

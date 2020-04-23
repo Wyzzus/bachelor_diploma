@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour
     public float CameraSpeed = 100;
     public GameObject MainCamera;
     public GameObject PlayerPosition;
+    public GameObject CameraShoulder;
+    public bool Rotatable = false;
     public Vector3 CameraPosition;
 
     void Update()
@@ -36,6 +38,13 @@ public class CameraController : MonoBehaviour
             Debug.Log("Нажат пробел");
             //transform.position = PlayerPosition.transform.position;
             MainCamera.transform.localPosition = new Vector3(0, 0, -14);
+        }
+        if (Input.GetMouseButtonDown(2))
+            Rotatable = !Rotatable;
+        if (Rotatable == true)
+        {
+            Debug.Log(CameraShoulder.transform.rotation.eulerAngles.x);
+            CameraShoulder.transform.Rotate(Vector3.left, Input.GetAxis("Mouse Y"), Space.World);
         }
         CameraPosition = MainCamera.transform.localPosition;
     }
