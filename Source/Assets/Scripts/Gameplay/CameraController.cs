@@ -23,12 +23,12 @@ public class CameraController : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         Vector3 Direction = new Vector3(x, 0, z);
         transform.position += Direction*Speed*Time.deltaTime;        
-        if(Input.GetAxis("Mouse ScrollWheel") > 0)
+        if(Input.GetAxis("Mouse ScrollWheel") > 0 && MainCamera.transform.position.z < -5)
         {
             Debug.Log("Колесико вверх");
             MainCamera.transform.localPosition += new Vector3(0, 0, CameraSpeed*Time.deltaTime);
         }
-        if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        if(Input.GetAxis("Mouse ScrollWheel") < 0 && MainCamera.transform.position.z > -60)
         {
             Debug.Log("Колесико вниз");
             MainCamera.transform.localPosition -= new Vector3(0, 0, CameraSpeed * Time.deltaTime);
