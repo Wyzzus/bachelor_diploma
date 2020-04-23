@@ -26,6 +26,7 @@ public class PlayerContainer : MonoBehaviour
 
     public void Show()
     {
-
+        GMInteractionComponent gmic = (GMInteractionComponent)Component;
+        gmic.Show(Data);
     }
 }

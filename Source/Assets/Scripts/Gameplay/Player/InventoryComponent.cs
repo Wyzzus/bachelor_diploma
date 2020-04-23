@@ -79,6 +79,13 @@ public class InventoryComponent : EntityComponent
     public void Add(int id)
     {
         Data.Inventory.Add(id);
+        UpdateView(Data);
+    }
+
+    public void AddEquipment(int id)
+    {
+        Data.Equipment.Add(id);
+        UpdateView(Data);
     }
 
     public void Remove()
@@ -96,6 +103,12 @@ public class InventoryComponent : EntityComponent
         {
             Data.Inventory.Remove(id);
         }
+        UpdateView(Data);
+    }
+
+    public void RemoveEquipment(int id)
+    {
+        Data.Equipment.Remove(id);
         UpdateView(Data);
     }
 }

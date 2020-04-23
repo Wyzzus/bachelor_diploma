@@ -238,7 +238,6 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     #endregion
 
-
     #region GM
 
     public void ClientSetMap(int index)
@@ -268,6 +267,16 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public void ClientRemoveItem(int playerId, int itemId)
     {
         CallRpcOnPlayerWithId("RemoveItem", playerId, itemId);
+    }
+
+    public void ClientAddEquipment(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("AddEquipment", playerId, itemId);
+    }
+
+    public void ClientRemoveEquipment(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("RemoveEquipment", playerId, itemId);
     }
 
     public void ClientAddEffect(int playerId, int itemId)
@@ -309,6 +318,18 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public void RemoveItem(int id)
     {
         Player.Inventory.Remove(id);
+    }
+
+    [PunRPC]
+    public void AddEquipment(int id)
+    {
+        Player.Inventory.AddEquipment(id);
+    }
+
+    [PunRPC]
+    public void RemoveEquipment(int id)
+    {
+        Player.Inventory.RemoveEquipment(id);
     }
 
     [PunRPC]
