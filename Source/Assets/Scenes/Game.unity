@@ -153,6 +153,8 @@ MonoBehaviour:
   CameraSpeed: 100
   MainCamera: {fileID: 819082156}
   PlayerPosition: {fileID: 0}
+  CameraShoulder: {fileID: 939755671}
+  Rotatable: 0
   CameraPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &510282146
 Transform:
