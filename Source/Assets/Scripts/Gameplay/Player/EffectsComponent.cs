@@ -10,6 +10,8 @@ public class EffectsComponent : EntityComponent
 
     public DndObjectUI UIPart;
 
+    public PlayerData Data;
+
     public override void Start()
     {
         base.Start();
@@ -17,6 +19,7 @@ public class EffectsComponent : EntityComponent
 
     public void SetupEffects(PlayerData Data)
     {
+        this.Data = Data;
         UpdateView(Data.Effects);
     }
 
@@ -25,6 +28,18 @@ public class EffectsComponent : EntityComponent
         EffectsHandler.UpdateOnComponent(effectsIds, typeof(Effect), this);
         if (effectsIds.Count > 0)
             Display(effectsIds[0]);
+    }
+
+    public void Add(int id)
+    {
+        Data.Effects.Add(id);
+        UpdateView(Data.Effects);
+    }
+
+    public void Remove(int id)
+    {
+        Data.Effects.Remove(id);
+        UpdateView(Data.Effects);
     }
 
     public override void Display(int ID)

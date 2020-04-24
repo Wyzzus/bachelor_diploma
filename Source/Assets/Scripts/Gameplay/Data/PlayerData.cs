@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerData
 {
     [SerializeField]
+    public int PlayerId;
+    [SerializeField]
     public string Name;
     [SerializeField]
     public int Skin;
