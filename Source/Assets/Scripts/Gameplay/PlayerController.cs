@@ -26,7 +26,16 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public GameDataContainer Skin;
     public bool AddMarkerMode;
     public Dropdown MarkerSelector;
+    public Dropdown EventSelector;
     public bool CanUpdate = false;
+
+    public Toggle CanAutoGenerate;
+
+    public int nextEvent;
+
+    public float nextEventTime;
+
+    public float counter;
 
     public Text MarkerText;
 
@@ -138,7 +147,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     public IEnumerator DelayedStart()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         
 
         CanUpdate = true;
@@ -149,6 +158,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         GetPlayerInfo();
         GM.SetupLocationsDropDown();
         GM.SetupDropDown(GameManager.instance.CurrentThemePack.Objects, MarkerSelector);
+        GM.SetupDropDown(GameManager.instance.CurrentThemePack.Events, EventSelector);
+        nextEventTime = 60f;
     }
 
     public void ChangeObjectActiveState(GameObject obj)
@@ -164,6 +175,25 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             {
                 Movement();
                 SetPlayerInfo();
+
+                if(isMaster)
+                {
+                    if(CanAutoGenerate.isOn)
+                    {
+                        if (counter < nextEventTime)
+                            counter += Time.deltaTime;
+                        else
+                        {
+                            counter = 0;
+                            EventSelector.value = nextEvent;
+                            ClientGenerateEvent();
+                            nextEvent = Random.Range(0, GameManager.instance.CurrentThemePack.Events.Count);
+                            DndEvent newEvent = GameManager.instance.CurrentThemePack.Events[nextEvent];
+                            nextEventTime = Random.Range(newEvent.MinTime, newEvent.MaxTime);
+                        }
+                    }
+                }
+
             }
             GetPlayerInfo();
         }
@@ -180,7 +210,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     public void SetMarkerMode()
     {
-        AddMarkerMode = true;
+        AddMarkerMode = !AddMarkerMode;
     }
 
     public void AddMarker()
@@ -194,7 +224,6 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             if (Physics.Raycast(ray, out hit, LayerMask))
             {
                 GameManager.instance.ClientAddMarker(MarkerSelector.value, hit.point);
-                AddMarkerMode = false;
             }
         }
     }
@@ -336,6 +365,29 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         }
     }
 
+    public void ClientGenerateEvent()
+    {
+        if (GameManager.instance.Players.Count < 2)
+            return;
+        int index = Random.Range(1, GameManager.instance.Players.Count);
+        string playerName = GameManager.instance.Players[index].Data.Name;
+
+        PhotonView view = PhotonView.Get(this);
+        photonView.RPC("GenerateEvent", RpcTarget.All, EventSelector.value, playerName);
+    }
+
+    public void ClientGenerateRandomEvent()
+    {
+        if (GameManager.instance.Players.Count < 2)
+            return;
+        int eventId = Random.Range(0, GameManager.instance.CurrentThemePack.Events.Count);
+        int index = Random.Range(1, GameManager.instance.Players.Count);
+        string playerName = GameManager.instance.Players[index].Data.Name;
+
+        PhotonView view = PhotonView.Get(this);
+        photonView.RPC("GenerateEvent", RpcTarget.All, eventId, playerName);
+    }
+
     #region RPC
     [PunRPC]
     public void SetMap(int index)
@@ -386,9 +438,9 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    public void GenerateEvent(int id, int playerId)
+    public void GenerateEvent(int id, string PlayerName)
     {
-
+        GM.GMInteraction.GenerateEvent(id, PlayerName);
     }
 
     [PunRPC]
@@ -412,6 +464,12 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             PhotonView view = PhotonView.Get(pc);
             photonView.RPC("UpdatePlayerView", RpcTarget.All);
         }
+    }
+
+    public void Leave()
+    {
+        PhotonNetwork.LeaveRoom();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     #endregion

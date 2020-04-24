@@ -237,7 +237,7 @@ Transform:
   m_GameObject: {fileID: 323917449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.51, z: 0}
-  m_LocalScale: {x: 66, y: 1, z: 46}
+  m_LocalScale: {x: 85.8, y: 1, z: 59.8}
   m_Children: []
   m_Father: {fileID: 2088101161}
   m_RootOrder: 0
@@ -425,8 +425,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -80, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 412.7}
-  m_SizeDelta: {x: 160, y: 50}
+  m_AnchoredPosition: {x: 0, y: 643.4}
+  m_SizeDelta: {x: 160, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1097830756
 CanvasRenderer:
@@ -458,11 +458,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -553,7 +553,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1300, y: 900}
+  m_SizeDelta: {x: 1690, y: 1170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1242531473
 MonoBehaviour:
@@ -804,7 +804,7 @@ MonoBehaviour:
   Speed: 10
   CameraSpeed: 100
   MainCamera: {fileID: 1263210722}
-  PlayerPosition: {fileID: 0}
+  Target: {fileID: 0}
   CameraShoulder: {fileID: 1783970404}
   Rotatable: 0
   CameraPosition: {x: 0, y: 0, z: 0}
@@ -949,7 +949,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1300, y: 900}
+  m_SizeDelta: {x: 1690, y: 1170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697818072
 MonoBehaviour:
@@ -1053,8 +1053,8 @@ MonoBehaviour:
     Descripion: {fileID: 0}
     ImageView: {fileID: 1273178143}
     ImageHandler:
-      MaxW: 1300
-      MaxH: 900
+      MaxW: 1690
+      MaxH: 1170
   ObjectsRoot: {fileID: 2136290210}
   MarkerPrefab: {fileID: 6157137568536876409, guid: 54c0c76dabc77774e98808510fd25500,
     type: 3}
@@ -1068,7 +1068,7 @@ Transform:
   m_GameObject: {fileID: 2088101159}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1, z: 1.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 323917450}
   - {fileID: 1242531472}

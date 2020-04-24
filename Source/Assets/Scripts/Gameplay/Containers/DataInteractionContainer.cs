@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class DataInteractionContainer : MonoBehaviour
 {
@@ -11,8 +12,15 @@ public class DataInteractionContainer : MonoBehaviour
     public int Data;
     public System.Type DataType;
 
+    public GameObject[] ObjectsToHide;
+
     public virtual void Setup(int itemId, System.Type ObjectType, EntityComponent Component, bool Equipable = false)
     {
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            foreach (GameObject obj in ObjectsToHide) obj.SetActive(false);
+        }
+
         this.Equipable = Equipable;
         this.Component = Component;
         this.Data = itemId;

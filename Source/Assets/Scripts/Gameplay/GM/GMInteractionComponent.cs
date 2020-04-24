@@ -23,6 +23,8 @@ public class GMInteractionComponent : EntityComponent
     public Text PlayerName;
     public Text SkinName;
 
+    public GameObject EventWindow;
+    public DndObjectUI EventUIPart;
     public AttributeEditContainer[] AttributeViews;
 
     #region Interaction
@@ -158,5 +160,15 @@ public class GMInteractionComponent : EntityComponent
             options.Add(option);
         }
         dd.AddOptions(options);
+    }
+
+    public void GenerateEvent(int id, string PlayerName)
+    {
+        EventWindow.SetActive(true);
+        DndEvent newEvent = GameManager.instance.CurrentThemePack.Events[id];
+        EventUIPart.Name.text = newEvent.Name;
+        string Description = "\n" + newEvent.Description.Replace("@player_name@", "<b>" + PlayerName + "</b>");
+        Description += "\nНеобходимо выбросить больше <b>" + newEvent.MaxRoll.ToString() + "</b>!";
+        EventUIPart.Descripion.text = Description;
     }
 }

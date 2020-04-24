@@ -37,8 +37,8 @@ public class GameManager : MonoBehaviourPun, IPunObservable
     public void Start()
     {
         saveLoadManager = new SaveLoadManager();
-        //string path = @"C:\Users\Wyzzus\Desktop\Stalker2.hgd";
-        string path = Application.dataPath + @"\Packs\Stalker1.hgd";
+        string path = @"C:\Users\Wyzzus\Desktop\Stalker1.hgd";
+        //string path = Application.dataPath + @"\Packs\CurrentPack.hgd";
         string message = "";
         CurrentThemePack = saveLoadManager.Load(path, out message);
         Debug.Log(message);
@@ -72,10 +72,5 @@ public class GameManager : MonoBehaviourPun, IPunObservable
     public void RemoveMarker(int index)
     {
         Map.RemoveMarker(index);
-    }
-
-    public void GenerateEvent(int id, int playerId)
-    {
-
     }
 }

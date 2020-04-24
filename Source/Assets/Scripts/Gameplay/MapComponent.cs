@@ -37,8 +37,8 @@ public class MapComponent : EntityComponent
 
     public IEnumerator SetPlacedObjects(Location location)
     {
-        float ratioX = 65.0f / 650.0f;
-        float ratioZ = 45.0f / 450.0f;
+        float ratioX = 65.0f / (650.0f / 1.3f);
+        float ratioZ = 45.0f / (450.0f / 1.3f);
         foreach(PlaceableObject obj in location.PlacedObjects)
         {
             Vector3 pos = new Vector3(obj.Position.x * ratioX, 0, obj.Position.z * ratioZ); ;

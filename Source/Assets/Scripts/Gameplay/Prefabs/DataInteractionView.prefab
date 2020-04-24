@@ -99,6 +99,8 @@ MonoBehaviour:
   Equipable: 0
   Component: {fileID: 0}
   Data: 0
+  ObjectsToHide:
+  - {fileID: 4275422106619862511}
 --- !u!1 &4275422105730905804
 GameObject:
   m_ObjectHideFlags: 0

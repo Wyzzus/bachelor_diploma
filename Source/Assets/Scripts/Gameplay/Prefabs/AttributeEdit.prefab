@@ -472,6 +472,11 @@ MonoBehaviour:
   Equipable: 0
   Component: {fileID: 0}
   Data: 0
+  ObjectsToHide:
+  - {fileID: 5673640902982508594}
+  - {fileID: 5673640903636922969}
+  - {fileID: 5673640902856288576}
+  - {fileID: 5673640902965390009}
   BaseValueEditor: {fileID: 5673640902982508592}
 --- !u!1 &5673640902982508594
 GameObject:
