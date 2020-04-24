@@ -355,6 +355,7 @@ MonoBehaviour:
       MaxW: 450
       MaxH: 450
   Players: []
+--- !u!4 &723013987
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -362,11 +363,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723013985}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 561.09045, y: 287.64926, z: -127.375}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &723013988
 MonoBehaviour:
@@ -511,7 +512,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1242531471
 GameObject:
@@ -804,6 +805,8 @@ MonoBehaviour:
   CameraSpeed: 100
   MainCamera: {fileID: 1263210722}
   PlayerPosition: {fileID: 0}
+  CameraShoulder: {fileID: 1783970404}
+  Rotatable: 0
   CameraPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1438431253
 Transform:
@@ -818,7 +821,7 @@ Transform:
   m_Children:
   - {fileID: 1783970405}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1440979129
 GameObject:
@@ -909,7 +912,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1697818070
 GameObject:
