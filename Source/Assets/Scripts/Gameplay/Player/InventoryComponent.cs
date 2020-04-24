@@ -13,8 +13,7 @@ public class InventoryComponent : EntityComponent
 
     public PlayerData Data;
     public int DisplayedItemId = -1;
-
-    // Start is called before the first frame update
+    
     public override void Start()
     {
         base.Start();
@@ -77,12 +76,39 @@ public class InventoryComponent : EntityComponent
         UpdateView(Data);
     }
 
+    public void Add(int id)
+    {
+        Data.Inventory.Add(id);
+        UpdateView(Data);
+    }
+
+    public void AddEquipment(int id)
+    {
+        Data.Equipment.Add(id);
+        UpdateView(Data);
+    }
+
     public void Remove()
     {
         if (DisplayedItemId >= 0)
         {
             Data.Inventory.Remove(DisplayedItemId);
         }
+        UpdateView(Data);
+    }
+
+    public void Remove(int id)
+    {
+        if (id >= 0)
+        {
+            Data.Inventory.Remove(id);
+        }
+        UpdateView(Data);
+    }
+
+    public void RemoveEquipment(int id)
+    {
+        Data.Equipment.Remove(id);
         UpdateView(Data);
     }
 }

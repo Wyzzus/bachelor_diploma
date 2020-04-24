@@ -12,18 +12,23 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public GameObject[] CommonInterfaces;
     public PlayerEntity Player;
     public GameObject[] PlayerInterfaces;
-
+    public GMEntity GM;
     public GameObject[] GMInterfaces;
 
     public Text Result;
     public Text PlayerName;
 
     public bool isLocal;
+    public bool isMaster;
 
     [SerializeField]
     public PlayerData Data;
     public GameDataContainer Skin;
+    public bool AddMarkerMode;
+    public Dropdown MarkerSelector;
     public bool CanUpdate = false;
+
+    public Text MarkerText;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -85,17 +90,27 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (isLocal)
         {
-
+            SetupInterface(CommonInterfaces, true);
+            if (isMaster)
+            {
+                SetupInterface(GMInterfaces, true);
+                SetupInterface(PlayerInterfaces, false);
+            }
+            else
+            {
+                SetupInterface(GMInterfaces, false);
+                SetupInterface(PlayerInterfaces, true);
+            }
         }
         else
         {
-            SetupIntgerface(CommonInterfaces, false);
-            SetupIntgerface(PlayerInterfaces, false);
-            SetupIntgerface(GMInterfaces, false);
+            SetupInterface(CommonInterfaces, false);
+            SetupInterface(PlayerInterfaces, false);
+            SetupInterface(GMInterfaces, false);
         }
     }
 
-    public void SetupIntgerface(GameObject[] interfaces, bool flag)
+    public void SetupInterface(GameObject[] interfaces, bool flag)
     {
         foreach (GameObject obj in interfaces)
         {
@@ -106,6 +121,17 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public void Start()
     {
         isLocal = base.photonView.IsMine;
+        isMaster = PhotonNetwork.IsMasterClient;
+        Data.PlayerId = base.photonView.ViewID;
+
+        GameManager.instance.Players.Add(this);
+
+        foreach (PlayerController pc in GameManager.instance.Players)
+        {
+            PhotonView view = PhotonView.Get(pc);
+            photonView.RPC("UpdatePlayerView", RpcTarget.All);
+        }
+
         HandleInterfaces();
         StartCoroutine(DelayedStart());
     }
@@ -113,12 +139,16 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public IEnumerator DelayedStart()
     {
         yield return new WaitForSeconds(1);
+        
+
         CanUpdate = true;
         Common.SetupPlayerInfo();
         SetupEffects();
         SetupInventory();
         SetupAttributes();
         GetPlayerInfo();
+        GM.SetupLocationsDropDown();
+        GM.SetupDropDown(GameManager.instance.CurrentThemePack.Objects, MarkerSelector);
     }
 
     public void ChangeObjectActiveState(GameObject obj)
@@ -136,6 +166,36 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                 SetPlayerInfo();
             }
             GetPlayerInfo();
+        }
+        if(AddMarkerMode)
+        {
+            AddMarker();
+            MarkerText.text = "Режим установки";
+        }
+        else
+        {
+            MarkerText.text = "Установить метку";
+        }
+    }
+
+    public void SetMarkerMode()
+    {
+        AddMarkerMode = true;
+    }
+
+    public void AddMarker()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("ЛКМ нажата");
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, LayerMask))
+            {
+                GameManager.instance.ClientAddMarker(MarkerSelector.value, hit.point);
+                AddMarkerMode = false;
+            }
         }
     }
 
@@ -209,6 +269,149 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     public void SetupAttributes()
     {
         Player.SetupAttributes(Data);
+    }
+
+    #endregion
+
+    #region GM
+
+    public void ClientSetMap(int index)
+    {
+        GameManager.instance.SetMap(index);
+        PhotonView view = PhotonView.Get(this);
+        photonView.RPC("SetMap", RpcTarget.All, index);
+    }
+
+    public void CallRpcOnPlayerWithId(string method, int playerId, int objId)
+    {
+        foreach (PlayerController pc in GameManager.instance.Players)
+        {
+            if (pc.Data.PlayerId == playerId)
+            {
+                PhotonView view = PhotonView.Get(this);
+                photonView.RPC(method, RpcTarget.All, objId);
+            }
+        }
+    }
+
+    public void ClientAddItem(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("AddItem", playerId, itemId);
+    }
+
+    public void ClientRemoveItem(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("RemoveItem", playerId, itemId);
+    }
+
+    public void ClientAddEquipment(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("AddEquipment", playerId, itemId);
+    }
+
+    public void ClientRemoveEquipment(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("RemoveEquipment", playerId, itemId);
+    }
+
+    public void ClientAddEffect(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("AddEffect", playerId, itemId);
+    }
+
+    public void ClientRemoveEffect(int playerId, int itemId)
+    {
+        CallRpcOnPlayerWithId("RemoveEffect", playerId, itemId);
+    }
+
+    public void ClientSetAttribute(int playerId, float value, int index)
+    {
+        foreach (PlayerController pc in GameManager.instance.Players)
+        {
+            if (pc.Data.PlayerId == playerId)
+            {
+                PhotonView view = PhotonView.Get(this);
+                photonView.RPC("SetAtribute", RpcTarget.All, value, index);
+            }
+        }
+    }
+
+    #region RPC
+    [PunRPC]
+    public void SetMap(int index)
+    {
+        GameManager.instance.SetMap(index);
+    }
+
+    [PunRPC]
+    public void AddItem(int id)
+    {
+        Player.Inventory.Add(id);
+    }
+
+    [PunRPC]
+    public void RemoveItem(int id)
+    {
+        Player.Inventory.Remove(id);
+    }
+
+    [PunRPC]
+    public void AddEquipment(int id)
+    {
+        Player.Inventory.AddEquipment(id);
+    }
+
+    [PunRPC]
+    public void RemoveEquipment(int id)
+    {
+        Player.Inventory.RemoveEquipment(id);
+    }
+
+    [PunRPC]
+    public void SetAtribute(float value, int index)
+    {
+        Data.BaseAttributes[index] = value;
+    }
+
+    [PunRPC]
+    public void AddEffect(int id)
+    {
+        Player.Effects.Add(id);
+    }
+
+    [PunRPC]
+    public void RemoveEffect(int id)
+    {
+        Player.Effects.Remove(id);
+    }
+
+    [PunRPC]
+    public void GenerateEvent(int id, int playerId)
+    {
+
+    }
+
+    [PunRPC]
+    public void UpdatePlayerView()
+    {
+        Common.PlayerInfo.UpdatePlayerView(GM.GMInteraction);
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Networking
+
+    public void OnDestroy()
+    {
+        GameManager.instance.Players.Remove(this);
+
+        foreach (PlayerController pc in GameManager.instance.Players)
+        {
+            PhotonView view = PhotonView.Get(pc);
+            photonView.RPC("UpdatePlayerView", RpcTarget.All);
+        }
     }
 
     #endregion

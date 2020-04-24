@@ -6,47 +6,81 @@ using UnityEngine.UI;
 
 public class MapComponent : EntityComponent
 {
-    public Dropdown MapSelectMenu;
-    SpriteRenderer spriteRenderer;
-    BoxCollider boxCollider;
-    public string[] MapsList;
-    public Texture2D[] textures;
+    public DndObjectUI UIPart;
+    public Transform ObjectsRoot;
+    public GameObject MarkerPrefab;
 
+    public List<GameDataContainer> Markers = new List<GameDataContainer>();
     public override void Start()
     {
-        base.Start();
-        textures = Resources.LoadAll<Texture2D>("TestMaps/");
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        boxCollider = GetComponent<BoxCollider>();
-        boxCollider.size = spriteRenderer.sprite.bounds.size;
-        MenuFill();
+        
     }
 
     void Update()
     {
-        if (spriteRenderer.sprite == null) spriteRenderer.sprite = Sprite.Create(new Texture2D(100, 100), new Rect(0, 0, 100, 100), new Vector2(0, 0));
-        boxCollider.size = spriteRenderer.sprite.bounds.size;
 
     }
 
     void MenuFill()
     {
-        MapsList = Directory.GetFiles("Assets\\Resources\\TestMaps", "*.jpg");
-        MapSelectMenu.options.Clear();
-        foreach (string option in MapsList)
-        {
-            
-            MapSelectMenu.options.Add(new Dropdown.OptionData(option.Substring(option.LastIndexOf(@"\") + 1)));
-        }
+
     }
 
-    public void MapChange()
+    public void SetMap(int index)
     {
-        Debug.Log(MapsList[MapSelectMenu.value].LastIndexOf(@"\")+1);
-        int lastIndex = MapsList[MapSelectMenu.value].LastIndexOf(@"\") + 1;
-        Debug.Log(@"TestMaps/" + MapsList[MapSelectMenu.value].Substring(lastIndex));
-        string spritePath = "TestMaps/" + MapsList[MapSelectMenu.value].Substring(lastIndex);
-        Debug.Log(MapSelectMenu.value);
-        spriteRenderer.sprite = Sprite.Create(textures[MapSelectMenu.value], new Rect(0, 0, textures[MapSelectMenu.value].width, textures[MapSelectMenu.value].height), new Vector2(.5f, .5f)); //Resources.Load<Sprite>(spritePath.Substring(0,spritePath.Length-4));
+        ClearRoot();
+        StopAllCoroutines();
+        Location newLocation = GameManager.instance.CurrentThemePack.Locations[index];
+        UIPart.ShowObject(newLocation);
+        StartCoroutine(SetPlacedObjects(newLocation));
+    }
+
+    public IEnumerator SetPlacedObjects(Location location)
+    {
+        float ratioX = 65.0f / 650.0f;
+        float ratioZ = 45.0f / 450.0f;
+        foreach(PlaceableObject obj in location.PlacedObjects)
+        {
+            Vector3 pos = new Vector3(obj.Position.x * ratioX, 0, obj.Position.z * ratioZ); ;
+            AddMarker(obj, pos);
+
+        }
+        yield return null;
+    }
+
+    public void AddMarker(int id, Vector3 position)
+    {
+        PlaceableObject obj = GameManager.instance.CurrentThemePack.Objects[id];
+        GameObject clone = Instantiate<GameObject>(MarkerPrefab);
+        GameDataContainer container = clone.GetComponent<GameDataContainer>();
+        container.UIPart.ShowObject(obj);
+        container.transform.position = position;
+        container.transform.SetParent(ObjectsRoot);
+        Markers.Add(container);
+    }
+
+    public void AddMarker(PlaceableObject obj, Vector3 position)
+    {
+        GameObject clone = Instantiate<GameObject>(MarkerPrefab, ObjectsRoot);
+        GameDataContainer container = clone.GetComponent<GameDataContainer>();
+        container.UIPart.ShowObject(obj);
+        container.transform.localPosition = position;
+        Markers.Add(container);
+    }
+
+    public void RemoveMarker(int id)
+    {
+        GameDataContainer tmp = Markers[id];
+        Markers.Remove(tmp);
+        Destroy(tmp.gameObject);
+    }
+
+    public void ClearRoot()
+    {
+        Markers.Clear();
+        foreach(Transform child in ObjectsRoot)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class PlayerInfoComponent : EntityComponent
 {
     public PlayerData Data;
+
+    public ScrollViewHandler PlayerViewHandler;
     
     [Header ("UI")]
     public InputField Name;
@@ -32,5 +34,10 @@ public class PlayerInfoComponent : EntityComponent
             options.Add(option);
         }
         SkinSelector.AddOptions(options);
+    }
+
+    public void UpdatePlayerView(GMInteractionComponent component)
+    {
+        PlayerViewHandler.UpdatePlayersView(GameManager.instance.Players, component);
     }
 }
