@@ -355,7 +355,6 @@ MonoBehaviour:
       MaxW: 450
       MaxH: 450
   Players: []
---- !u!4 &723013987
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

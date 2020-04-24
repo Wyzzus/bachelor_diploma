@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviourPun, IPunObservable
     public void Start()
     {
         saveLoadManager = new SaveLoadManager();
+        string path = @"C:\Users\Artur\Desktop\StalkerDND_2.0.hgd";
         string path = @"C:\Users\Wyzzus\Desktop\Stalker2.hgd";
         //string path = Application.dataPath + @"\Packs\Stalker1.hgd";
         string message = "";
