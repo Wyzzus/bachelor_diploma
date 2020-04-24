@@ -50,6 +50,30 @@ public class GameManager : MonoBehaviourPun, IPunObservable
         Map.SetMap(id);
     }
 
+    public void ClientAddMarker(int id, Vector3 pos)
+    {
+        PhotonView view = PhotonView.Get(this);
+        photonView.RPC("AddMarker", RpcTarget.All, id, pos);
+    }
+
+    [PunRPC]
+    public void AddMarker(int id, Vector3 pos)
+    {
+        Map.AddMarker(id, pos);
+    }
+
+    public void ClientRemoveMarker(int index)
+    {
+        PhotonView view = PhotonView.Get(this);
+        photonView.RPC("RemoveMarker", RpcTarget.All, index);
+    }
+
+    [PunRPC]
+    public void RemoveMarker(int index)
+    {
+        Map.RemoveMarker(index);
+    }
+
     public void GenerateEvent(int id, int playerId)
     {
 

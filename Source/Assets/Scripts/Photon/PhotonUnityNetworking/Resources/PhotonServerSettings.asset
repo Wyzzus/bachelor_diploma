@@ -46,5 +46,7 @@ MonoBehaviour:
   - UpdatePlayerView
   - AddEquipment
   - RemoveEquipment
+  - AddMarker
+  - RemoveMarker
   DisableAutoOpenWizard: 1
   ShowSettings: 1

@@ -24,7 +24,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     [SerializeField]
     public PlayerData Data;
     public GameDataContainer Skin;
+    public bool AddMarkerMode;
+    public Dropdown MarkerSelector;
     public bool CanUpdate = false;
+
+    public Text MarkerText;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -144,6 +148,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         SetupAttributes();
         GetPlayerInfo();
         GM.SetupLocationsDropDown();
+        GM.SetupDropDown(GameManager.instance.CurrentThemePack.Objects, MarkerSelector);
     }
 
     public void ChangeObjectActiveState(GameObject obj)
@@ -161,6 +166,36 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                 SetPlayerInfo();
             }
             GetPlayerInfo();
+        }
+        if(AddMarkerMode)
+        {
+            AddMarker();
+            MarkerText.text = "Режим установки";
+        }
+        else
+        {
+            MarkerText.text = "Установить метку";
+        }
+    }
+
+    public void SetMarkerMode()
+    {
+        AddMarkerMode = true;
+    }
+
+    public void AddMarker()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("ЛКМ нажата");
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, LayerMask))
+            {
+                GameManager.instance.ClientAddMarker(MarkerSelector.value, hit.point);
+                AddMarkerMode = false;
+            }
         }
     }
 
